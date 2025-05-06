@@ -330,7 +330,9 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
     // Markdown模式下的预览
     if (_contentFormat == ContentFormat.markdown && _isPreviewMode) {
       return Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
+        width: double.infinity, // 使容器宽度充满父容器
+        constraints: const BoxConstraints(minHeight: 300), // 设置最小高度
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -338,17 +340,62 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
             color: Colors.grey.shade300,
             width: 1,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
         ),
-        child: MarkdownBody(
-          data: _contentController.text,
-          selectable: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // 内容左对齐
+          children: [
+            // 预览模式标题
+            if (_titleController.text.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Text(
+                  _titleController.text,
+                  style: const TextStyle(
+                    fontSize: 22, 
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+            // Markdown内容
+            Expanded(
+              child: MarkdownBody(
+                data: _contentController.text,
+                selectable: true,
+                styleSheet: MarkdownStyleSheet(
+                  h1: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  h2: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  h3: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  p: const TextStyle(fontSize: 14, height: 1.5),
+                  blockquote: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                  ),
+                  code: TextStyle(
+                    backgroundColor: Colors.grey.shade200,
+                    fontFamily: 'monospace',
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
     
     // 普通编辑模式
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
@@ -356,17 +403,27 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
           color: Colors.grey.shade300,
           width: 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: TextField(
         controller: _contentController,
         maxLines: null,
         expands: true,
         textAlignVertical: TextAlignVertical.top,
+        style: const TextStyle(fontSize: 14, height: 1.5),
         decoration: InputDecoration(
           hintText: _contentFormat == ContentFormat.markdown
               ? '使用Markdown语法编写...'
               : '写下你的日记...',
           border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.grey.shade400),
         ),
       ),
     );

@@ -32,6 +32,9 @@ dependencies:
   table_calendar: ^3.0.9  # 日历组件
   image_picker: ^1.0.7   # 图片选择器
   
+  # 数据可视化
+  fl_chart: ^0.65.0
+  
   # 存储和同步
   shared_preferences: ^2.2.2
   hive: ^2.2.3

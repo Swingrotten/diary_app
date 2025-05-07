@@ -15,6 +15,7 @@ class WebDavService {
   bool _isEnabled = false;
   bool _syncOnStart = false;
   bool _syncOnChange = false;
+  String _serverUrl = '';
   
   // 单例模式
   factory WebDavService() {
@@ -28,6 +29,9 @@ class WebDavService {
   
   // WebDAV服务是否已启用
   bool get isEnabled => _isEnabled;
+  
+  // 获取服务器URL
+  String get serverUrl => _serverUrl;
   
   // 是否在启动时同步
   bool get syncOnStart => _syncOnStart;
@@ -45,6 +49,7 @@ class WebDavService {
         final username = config['username'] as String;
         final password = config['password'] as String;
         
+        _serverUrl = serverUrl;
         _syncOnStart = config['syncOnStart'] as bool? ?? false;
         _syncOnChange = config['syncOnChange'] as bool? ?? false;
         
@@ -88,6 +93,7 @@ class WebDavService {
       await configFile.writeAsString(jsonEncode(config));
       
       // 保存成功后更新当前实例
+      _serverUrl = serverUrl;
       _client = webdav.newClient(
         serverUrl,
         user: username,

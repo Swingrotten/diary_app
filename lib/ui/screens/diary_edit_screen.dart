@@ -334,8 +334,8 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
         width: double.infinity, // 使容器宽度充满父容器
         constraints: const BoxConstraints(minHeight: 300), // 设置最小高度
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: Colors.grey.shade300,
             width: 1,
@@ -344,61 +344,89 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
             BoxShadow(
               color: Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
-              blurRadius: 2,
+              blurRadius: 3,
               offset: const Offset(0, 1),
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // 内容左对齐
-          children: [
-            // 预览模式标题
-            if (_titleController.text.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  _titleController.text,
-                  style: const TextStyle(
-                    fontSize: 22, 
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, // 内容左对齐
+            children: [
+              // 预览模式标题
+              if (_titleController.text.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Text(
+                    _titleController.text,
+                    style: const TextStyle(
+                      fontSize: 24, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              // Markdown内容
+              SizedBox(
+                width: double.infinity,
+                child: MarkdownBody(
+                  data: _contentController.text,
+                  selectable: true,
+                  softLineBreak: true,
+                  fitContent: false,
+                  styleSheet: MarkdownStyleSheet(
+                    h1: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, height: 1.6),
+                    h2: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, height: 1.6),
+                    h3: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1.6),
+                    p: const TextStyle(fontSize: 16, height: 1.6),
+                    blockquoteDecoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    blockquote: TextStyle(
+                      color: Colors.grey.shade700,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 16,
+                    ),
+                    codeblockDecoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    code: TextStyle(
+                      backgroundColor: Colors.grey.shade200,
+                      fontFamily: 'monospace',
+                      fontSize: 14,
+                    ),
+                    horizontalRuleDecoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          width: 1.0,
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                    ),
+                    tableBorder: TableBorder.all(
+                      color: Colors.grey.shade300,
+                      width: 1,
+                    ),
+                    tableColumnWidth: const IntrinsicColumnWidth(),
                   ),
                 ),
               ),
-            // Markdown内容
-            Expanded(
-              child: MarkdownBody(
-                data: _contentController.text,
-                selectable: true,
-                styleSheet: MarkdownStyleSheet(
-                  h1: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  h2: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  h3: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  p: const TextStyle(fontSize: 14, height: 1.5),
-                  blockquote: TextStyle(
-                    color: Colors.grey.shade700,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 14,
-                  ),
-                  code: TextStyle(
-                    backgroundColor: Colors.grey.shade200,
-                    fontFamily: 'monospace',
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }
     
     // 普通编辑模式
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.grey.shade300,
           width: 1,
@@ -407,24 +435,59 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
-            blurRadius: 2,
+            blurRadius: 3,
             offset: const Offset(0, 1),
           ),
         ],
       ),
-      child: TextField(
-        controller: _contentController,
-        maxLines: null,
-        expands: true,
-        textAlignVertical: TextAlignVertical.top,
-        style: const TextStyle(fontSize: 14, height: 1.5),
-        decoration: InputDecoration(
-          hintText: _contentFormat == ContentFormat.markdown
-              ? '使用Markdown语法编写...'
-              : '写下你的日记...',
-          border: InputBorder.none,
-          hintStyle: TextStyle(color: Colors.grey.shade400),
-        ),
+      child: Column(
+        children: [
+          // 编辑模式的提示（仅在Markdown模式下显示）
+          if (_contentFormat == ContentFormat.markdown)
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.blue.shade100),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, size: 16, color: Colors.blue.shade700),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Markdown模式: 支持标题(#)、加粗(**)、列表(-)等格式',
+                      style: TextStyle(
+                        color: Colors.blue.shade800,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+          // 编辑器
+          Expanded(
+            child: TextField(
+              controller: _contentController,
+              maxLines: null,
+              expands: true,
+              textAlignVertical: TextAlignVertical.top,
+              style: const TextStyle(fontSize: 16, height: 1.6), // 和预览模式字体大小保持一致
+              decoration: InputDecoration(
+                hintText: _contentFormat == ContentFormat.markdown
+                    ? '使用Markdown语法编写...'
+                    : '写下你的日记...',
+                border: InputBorder.none,
+                hintStyle: TextStyle(color: Colors.grey.shade400),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

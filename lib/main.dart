@@ -9,6 +9,7 @@ import 'ui/screens/splash_screen.dart';
 import 'ui/themes/app_theme.dart';
 import 'services/webdav_service.dart';
 import 'services/diary_database.dart';
+import 'services/theme_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,10 @@ void main() async {
   // 初始化WebDAV服务
   final webDavService = WebDavService();
   await webDavService.initialize();
+  
+  // 初始化主题服务
+  final themeService = ThemeService();
+  await themeService.initialize();
   
   // 测试WebDAV连接
   await _testWebDAVConnection();
@@ -79,14 +84,19 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DiaryProvider()),
+        ChangeNotifierProvider.value(value: ThemeService()),
       ],
-      child: MaterialApp(
-        title: '每日心情',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+      child: Consumer<ThemeService>(
+        builder: (context, themeService, child) {
+          return MaterialApp(
+            title: '每日心情',
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeService.themeMode,
+            debugShowCheckedModeBanner: false,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

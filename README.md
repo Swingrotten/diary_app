@@ -8,6 +8,7 @@
 - **格式支持**：支持纯文本和Markdown格式
 - **多媒体附件**：支持添加照片到日记
 - **情感记录**：使用心情指数记录您的情绪变化
+- **心情统计**：可视化展示不同时间范围内的心情分布和趋势
 - **标签系统**：通过标签分类和组织您的日记
 - **云同步**：支持WebDAV同步，可与Nextcloud、Seafile等服务兼容
 - **跨平台**：支持Android、Windows和iOS
@@ -60,6 +61,7 @@
 - **Table Calendar**: 日历组件
 - **Image Picker**: 图片选择功能
 - **WebDAV Client**: WebDAV同步支持
+- **FL Chart**: 心情数据可视化和统计图表
 
 ## 项目结构
 
@@ -72,14 +74,19 @@ lib/
 │   ├── diary_database.dart    # 数据库服务
 │   ├── diary_provider.dart    # 状态管理提供者
 │   ├── media_service.dart     # 媒体服务
+│   ├── theme_service.dart     # 主题服务
 │   └── webdav_service.dart    # WebDAV同步服务
 ├── ui/                        # 用户界面
 │   ├── screens/               # 屏幕/页面
-│   │   ├── diary_edit_screen.dart   # 日记编辑页面
-│   │   ├── home_screen.dart         # 主页面
-│   │   ├── search_screen.dart       # 搜索页面
-│   │   ├── splash_screen.dart       # 启动页面
-│   │   └── webdav_config_screen.dart # WebDAV配置页面
+│   │   ├── diary_edit_screen.dart     # 日记编辑页面
+│   │   ├── home_screen.dart           # 主页面
+│   │   ├── mood_stats_screen.dart     # 心情统计页面
+│   │   ├── search_screen.dart         # 搜索页面
+│   │   ├── settings_screen.dart       # 设置页面
+│   │   ├── splash_screen.dart         # 启动页面
+│   │   ├── tag_manager_screen.dart    # 标签管理页面
+│   │   ├── webdav_config_screen.dart  # WebDAV配置页面
+│   │   └── webdav_media_screen.dart   # WebDAV媒体管理页面
 │   ├── themes/                # 主题设置
 │   │   └── app_theme.dart     # 应用主题
 │   └── widgets/               # 可复用组件
@@ -102,6 +109,7 @@ lib/
 - 图片附件功能 - 基础实现已完成，列表视图中的图片显示已优化
 - WebDAV同步功能 - 支持日记和图片同步到WebDAV服务器
 - Markdown支持 - 添加Markdown格式的日记编辑和预览
+- 心情统计功能 - 支持不同时间范围的心情分布、趋势和统计分析
 
 ### 部分完成 🔄
 
@@ -114,7 +122,6 @@ lib/
 
 - 应用密码保护
 - 通知和提醒功能：定时提醒用户记录日记
-- 数据可视化：情绪分析和统计图表
 - iOS和Android平台适配优化
 - 用户引导和教程
 - 多语言支持
@@ -141,6 +148,19 @@ lib/
 - 支持标题、列表、粗体、斜体等格式
 - 在创建或编辑日记时可以选择内容格式
 
+## 心情统计功能
+
+应用提供了丰富的心情数据可视化功能，帮助您了解自己的心情变化：
+
+- **时间范围选择**：可选择查看近7天、30天、90天或全部时间的心情数据
+- **心情分布**：使用饼图直观展示不同心情状态的分布比例
+- **心情趋势**：使用折线图展示一段时间内的心情变化趋势
+- **数据统计**：显示日记总数、日均日记数量及最常见心情
+
+通过分析这些数据，您可以更好地了解自己的情绪波动，发现影响心情的因素，从而做出积极的改变。
+
+您可以通过主页设置菜单中的"心情统计"选项进入此功能。
+
 ## 已知问题
 
 - 在某些设备上可能存在UI布局适配问题
@@ -155,9 +175,9 @@ lib/
 1. 完善搜索功能，添加日期范围搜索和更多高级筛选选项
 2. 完善标签系统UI和交互，添加标签管理界面
 3. 修复富文本编辑器问题，适配最新的Flutter Quill API
-4. 实现数据可视化功能，提供情绪分析和统计
-5. 添加应用密码保护功能，提高数据安全性
-6. 增强WebDAV同步功能，支持增量同步和冲突解决
+4. 添加应用密码保护功能，提高数据安全性
+5. 增强WebDAV同步功能，支持增量同步和冲突解决
+6. 添加通知和提醒功能，支持定时提醒写日记
 
 ## 贡献指南
 

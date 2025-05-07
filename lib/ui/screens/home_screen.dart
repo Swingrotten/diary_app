@@ -8,6 +8,9 @@ import 'diary_edit_screen.dart';
 import 'search_screen.dart';
 import 'webdav_config_screen.dart';
 import 'webdav_media_screen.dart';
+import 'settings_screen.dart';
+import 'tag_manager_screen.dart';
+import 'mood_stats_screen.dart';
 import '../widgets/diary_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -90,95 +93,103 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showSettingsMenu() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.cloud_sync),
-            title: const Text('WebDAV同步设置'),
-            subtitle: const Text('配置云同步服务'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WebDavConfigScreen(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.photo_library),
-            title: const Text('WebDAV媒体管理'),
-            subtitle: const Text('管理已上传的图片'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WebDavMediaScreen(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.color_lens),
-            title: const Text('主题设置'),
-            subtitle: const Text('更改应用外观'),
-            onTap: () {
-              Navigator.pop(context);
-              // TODO: 实现主题设置
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('主题设置功能即将推出')),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: const Text('语言设置'),
-            subtitle: const Text('切换应用语言'),
-            onTap: () {
-              Navigator.pop(context);
-              // TODO: 实现语言设置
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('语言设置功能即将推出')),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.security),
-            title: const Text('安全设置'),
-            subtitle: const Text('设置应用密码保护'),
-            onTap: () {
-              Navigator.pop(context);
-              // TODO: 实现安全设置
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('安全设置功能即将推出')),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('关于'),
-            subtitle: const Text('应用信息和版本'),
-            onTap: () {
-              Navigator.pop(context);
-              // TODO: 实现关于页面
-              showAboutDialog(
-                context: context,
-                applicationName: '每日心情',
-                applicationVersion: '1.0.0',
-                applicationLegalese: '© 2023 每日心情开发团队',
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16),
-                    child: Text('一款简单易用的跨平台日记应用，帮助您记录每一天的心情与点滴。'),
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('应用设置'),
+              subtitle: const Text('主题、安全和数据管理'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
                   ),
-                ],
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.tag),
+              title: const Text('标签管理'),
+              subtitle: const Text('查看和编辑所有标签'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TagManagerScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.analytics),
+              title: const Text('心情统计'),
+              subtitle: const Text('查看情绪分析和统计图表'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MoodStatsScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.cloud_sync),
+              title: const Text('WebDAV同步设置'),
+              subtitle: const Text('配置云同步服务'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WebDavConfigScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: const Text('WebDAV媒体管理'),
+              subtitle: const Text('管理已上传的图片'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WebDavMediaScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('关于'),
+              subtitle: const Text('应用信息和版本'),
+              onTap: () {
+                Navigator.pop(context);
+                showAboutDialog(
+                  context: context,
+                  applicationName: '每日心情',
+                  applicationVersion: 'v0.1.0',
+                  applicationIcon: const Icon(Icons.book, size: 48),
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Text('一款简单易用的跨平台日记应用，帮助您记录每一天的心情与点滴。'),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

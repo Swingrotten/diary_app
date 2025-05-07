@@ -689,27 +689,27 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
 
     try {
       // 使用当前值创建更新后的日记条目
-      final updatedEntry = widget.entry.copy(
-        title: _titleController.text,
+    final updatedEntry = widget.entry.copy(
+      title: _titleController.text,
         content: content,
         dateModified: DateTime.now(),
-        tags: _tags,
-        mood: _selectedMood,
-        isFavorite: _isFavorite,
+      tags: _tags,
+      mood: _selectedMood,
+      isFavorite: _isFavorite,
         mediaLinks: _mediaLinks,
         contentFormat: _contentFormat,
-      );
+    );
 
       int resultId = -1;
       bool success = false;
-  
-      if (widget.isNewEntry) {
+
+    if (widget.isNewEntry) {
         // 创建新日记
         debugPrint('正在保存新日记...');
         resultId = await diaryProvider.addDiaryEntry(updatedEntry);
         success = resultId > 0;
         debugPrint('新日记保存结果: ID = $resultId, 成功 = $success');
-      } else {
+    } else {
         // 更新现有日记
         debugPrint('正在更新日记 ID: ${widget.entry.id}...');
         success = await diaryProvider.updateDiaryEntry(updatedEntry);
@@ -753,10 +753,10 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
             debugPrint('同步日记失败: $e');
           }
         }
-      }
+    }
 
-      if (mounted) {
-        Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
       }
     } catch (e) {
       debugPrint('保存日记时发生错误: $e');

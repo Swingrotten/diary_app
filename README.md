@@ -185,4 +185,4 @@ lib/
 
 ## 许可证
 
-[待定] - 本项目采用的开源许可证类型
+MIT License - 查看 [LICENSE](LICENSE) 文件获取详细信息。

@@ -130,7 +130,7 @@ class DiaryProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // 更新日记条目并支持自动同步
   Future<bool> updateDiaryEntry(DiaryEntry entry) async {
     _isLoading = true;
@@ -165,7 +165,7 @@ class DiaryProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // 删除日记条目
   Future<bool> deleteDiaryEntry(int id) async {
     _isLoading = true;

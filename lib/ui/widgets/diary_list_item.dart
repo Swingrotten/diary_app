@@ -62,14 +62,14 @@ class DiaryListItem extends StatelessWidget {
               stops: const [0.0, 1.0],
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                     Expanded(
                       child: Row(
                         children: [
@@ -92,22 +92,22 @@ class DiaryListItem extends StatelessWidget {
                           ),
                           const SizedBox(width: 12),
                           // 标题
-                          Expanded(
-                            child: Text(
-                              entry.title.isNotEmpty ? entry.title : '无标题',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                  Expanded(
+                    child: Text(
+                      entry.title.isNotEmpty ? entry.title : '无标题',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                         ],
                       ),
                     ),
                     // 心情和收藏图标
-                    Row(
-                      children: [
+                  Row(
+                    children: [
                         Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -115,31 +115,31 @@ class DiaryListItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Icon(
-                            MoodIcons.getMoodIcon(entry.mood),
-                            color: MoodIcons.getMoodColor(entry.mood),
+                        MoodIcons.getMoodIcon(entry.mood),
+                        color: MoodIcons.getMoodColor(entry.mood),
                             size: 22,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          icon: Icon(
-                            entry.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        icon: Icon(
+                          entry.isFavorite ? Icons.favorite : Icons.favorite_border,
                             color: entry.isFavorite ? Colors.red : Colors.grey.shade400,
                             size: 22,
-                          ),
+                        ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          onPressed: () {
-                            // 切换收藏状态
-                            final diaryProvider =
-                                Provider.of<DiaryProvider>(context, listen: false);
-                            diaryProvider.toggleFavorite(entry.id!);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        onPressed: () {
+                          // 切换收藏状态
+                          final diaryProvider =
+                              Provider.of<DiaryProvider>(context, listen: false);
+                          diaryProvider.toggleFavorite(entry.id!);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
                 
                 // 分隔线
                 Padding(
@@ -148,16 +148,16 @@ class DiaryListItem extends StatelessWidget {
                 ),
                 
                 // 内容预览
-                Text(
-                  contentPreview,
+              Text(
+                contentPreview,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     height: 1.4,
                     color: Colors.grey.shade800,
                     fontSize: 15,
                   ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
                 
                 const SizedBox(height: 12),
                 
@@ -236,10 +236,10 @@ class DiaryListItem extends StatelessWidget {
                   ),
                 
                 // 底部信息栏
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // 显示创建时间
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // 显示创建时间
                     Row(
                       children: [
                         Container(
@@ -252,12 +252,12 @@ class DiaryListItem extends StatelessWidget {
                             children: [
                               Icon(Icons.access_time, size: 14, color: Colors.grey.shade600),
                               const SizedBox(width: 4),
-                              Text(
-                                timeString,
+                  Text(
+                    timeString,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: Colors.grey.shade700,
                                   fontWeight: FontWeight.w500,
-                                ),
+                  ),
                               ),
                             ],
                           ),
@@ -297,15 +297,15 @@ class DiaryListItem extends StatelessWidget {
                       ],
                     ),
                     
-                    // 显示标签
-                    if (entry.tags.isNotEmpty)
-                      Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
+                  // 显示标签
+                  if (entry.tags.isNotEmpty)
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: entry.tags.map((tag) {
-                              return Padding(
+                          children: entry.tags.map((tag) {
+                            return Padding(
                                 padding: const EdgeInsets.only(left: 4.0),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
@@ -315,22 +315,22 @@ class DiaryListItem extends StatelessWidget {
                                     border: Border.all(color: Colors.blue.shade100),
                                   ),
                                   child: Text(
-                                    tag,
+                                  tag,
                                     style: TextStyle(
                                       fontSize: 10,
                                       color: Colors.blue.shade800,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
-                  ],
-                ),
-              ],
+                    ),
+                ],
+              ),
+            ],
             ),
           ),
         ),

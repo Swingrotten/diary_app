@@ -89,12 +89,12 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeService>(
         builder: (context, themeService, child) {
           return MaterialApp(
-            title: '每日心情',
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
+        title: '每日心情',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
             themeMode: themeService.themeMode,
-            debugShowCheckedModeBanner: false,
-            home: const SplashScreen(),
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
           );
         },
       ),

@@ -35,7 +35,7 @@ class DiaryDatabase {
       path = join(dbDir, filePath);
     } else {
       // Android/iOS路径处理
-      final dbPath = await getDatabasesPath();
+    final dbPath = await getDatabasesPath();
       path = join(dbPath, filePath);
     }
 
